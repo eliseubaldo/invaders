@@ -3,14 +3,23 @@ import {getElement, offsetElement} from './utils';
 class Invader {
     constructor(id, row, col, worldElement, totalCols){
         this.invadersSize = getElement(worldElement).clientWidth * 0.040;
-        const SPACING = 10;
-        this.initialXPos = (getElement(worldElement).clientWidth / 2) - ((totalCols * this.invadersSize) / 2 );
+        const SPACING = 5;
+        this.initialXPos = (getElement(worldElement).clientWidth / 2) - ((totalCols * (this.invadersSize + SPACING)) / 2 ) - ((this.invadersSize + SPACING));
          
         this.id = id;
         this.width = this.invadersSize;
         this.height = this.invadersSize;
         this.top = row * this.invadersSize + SPACING;
-        this.left = this.initialXPos + (col * this.invadersSize) + SPACING;
+        // if(col === 0) {
+        //     this.left = this.initialXPos;
+
+        // // } else if(col === 1) {
+        // //     this.prevPos = this.initialXPos + this.invadersSize + SPACING;
+        // //     this.left = this.prevPos;
+        // } else {
+            this.prevPos = this.initialXPos + (col * (this.invadersSize + SPACING));
+            this.left = this.prevPos + this.invadersSize + SPACING;
+        // }
         this.worldElement = worldElement;
         this.initiate();
     }

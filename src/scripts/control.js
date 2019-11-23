@@ -10,7 +10,12 @@ class MainControl {
                 right: false,
                 up: false,
                 down: false
-              }
+              },
+            worldBoundaries: {
+                left: 0,
+                right: this.world.docWidth
+            },
+            invadersMovDirection: 'right'
         };
         
     }
@@ -23,11 +28,14 @@ class MainControl {
     }
 
     update(progress) {
+
+        
         if (this.state.pressedKeys.left) {
-            this.world.player.action('left');
-            console.log(this.world.player);
-            // state.x -= progress
-          }
+            this.world.player.action('left', this.state.worldBoundaries);
+        }
+        if (this.state.pressedKeys.right) {
+            this.world.player.action('right', this.state.worldBoundaries);
+        }
         
       }
       
