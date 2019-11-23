@@ -17,8 +17,8 @@ class Invader {
         // //     this.prevPos = this.initialXPos + this.invadersSize + SPACING;
         // //     this.left = this.prevPos;
         // } else {
-            this.prevPos = this.initialXPos + (col * (this.invadersSize + SPACING));
-            this.left = this.prevPos + this.invadersSize + SPACING;
+            let prevPos = this.initialXPos + (col * (this.invadersSize + SPACING));
+            this.left = prevPos + this.invadersSize + SPACING;
         // }
         this.worldElement = worldElement;
         this.initiate();
@@ -43,6 +43,23 @@ class Invader {
 
         this.x = offsetElement(getElement('inv' + this.id)).left;
         this.y = offsetElement(getElement('inv' + this.id)).top;
+        
+    }
+
+    move(direction, boundaries){
+        //loopar na rray e pegar o invader com xPos maior que todos
+        //loopar na array e pegar o invader com yPos maior que todos
+        // boundaries para movimento serao esses valores
+
+
+        if(direction === 'left' && this.x > boundaries.left) {
+            this.x -= 10;
+            getElement(this.id).style.left = this.x+'px';
+        }
+        if(direction === 'right' && this.x < boundaries.right) {
+            this.x += 10;
+            getElement(this.id).style.left = this.x+'px';
+        }
         
     }
 
