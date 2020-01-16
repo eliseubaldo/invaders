@@ -53,7 +53,7 @@ class World {
       }
 
     moveInvaders(direction) {
-
+        let movingDirection;
         if (direction === 'right') {
             let bigger = 0;
             for (let i = 0; i < this.invadersGrid.length; i++) {
@@ -63,9 +63,11 @@ class World {
             }
 
             if (bigger + this.invadersPace > this.docWidth) {
-                return 'left';
+                movingDirection = 'left';
+                this.updateInvadersGrid('left');
             } else {
                 this.updateInvadersGrid('right');
+                movingDirection = 'right';
             }
             console.log('biger:',bigger);
         }
@@ -79,18 +81,17 @@ class World {
             }
 
             if (smaller - this.invadersPace < 0) {
-                return 'right';
+                movingDirection = 'right';
+                this.updateInvadersGrid('right');
             } else {
                 this.updateInvadersGrid('left');
+                movingDirection = 'left';
             }
             console.log('smaller:',smaller);
         }
 
         this.updateInvadersView();
-
-        console.log('moved', this.invadersGrid);
-
-
+        return movingDirection;
     }
 
     updateInvadersGrid(direction) {
@@ -151,7 +152,11 @@ class World {
         const playerShot = getElement('playershot');
         playerShot.style.top = this.playerShot.y + 'px';
         
-        
+        if (this.playerShot.y < 0) {
+            this.playerShot = null;
+            this.shooting = false;
+        }
+
     }
 
 
