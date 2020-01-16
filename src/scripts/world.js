@@ -16,6 +16,7 @@ class World {
         this.playerStageY = this.docHeight - 10;
         this.invadersGrid = this.generateInvaders(this.invR, this.invC);
         this.player = new Player('player', this.centerStageX, this.playerStageY, this.element);
+        this.invadersPace = 40;
     }
 
     addWorld() {
@@ -48,6 +49,94 @@ class World {
         }
         return arr;
       }
+
+    moveInvaders(direction) {
+        //loopar na rray e pegar o invader com rightEdgePos maior que todos
+        if (direction === 'right') {
+            let bigger = 0;
+            for (let i = 0; i < this.invadersGrid.length; i++) {
+                for (let b = 0; b < this.invadersGrid[i].length; b++) {
+                    if (this.invadersGrid[i][b].rightEdgePos > bigger) bigger = this.invadersGrid[i][b].rightEdgePos;
+                }
+            }
+
+            if (bigger + this.invadersPace > this.docWidth) {
+                return 'left';
+            } else {
+                this.updateInvadersGrid('right');
+            }
+            console.log('biger:',bigger);
+        }
+
+        if (direction === 'left') {
+            let smaller = this.invadersGrid[0][0].left;
+            for (let i = 0; i < this.invadersGrid.length; i++) {
+                for (let b = 0; b < this.invadersGrid[i].length; b++) {
+                    if (this.invadersGrid[i][b].left < smaller) smaller = this.invadersGrid[i][b].left;
+                }
+            }
+
+            if (smaller - this.invadersPace < 0) {
+                return 'right';
+            } else {
+                this.updateInvadersGrid('left');
+            }
+            console.log('smaller:',smaller);
+        }
+
+        this.updateInvadersView();
+
+
+        // boundaries para movimento serao esses valores
+
+        // recebe array de invaders, verifica se da pra andar na direcao desejada
+        // atualiza todos as posicoes
+        // loopa na array e atualiza a view (codigo abaixo)
+
+        console.log('moved', this.invadersGrid);
+
+        // if(direction === 'left' && this.x > boundaries.left) {
+        //     this.x -= 10;
+        //     getElement(this.id).style.left = this.x+'px';
+        // }
+        // if(direction === 'right' && this.x < boundaries.right) {
+        //     this.x += 10;
+        //     getElement(this.id).style.left = this.x+'px';
+        // }
+        
+        return moveDirection;
+    }
+
+    updateInvadersGrid(direction) {
+        if(direction === 'right') {
+            for (let i = 0; i < this.invadersGrid.length; i++) {
+                for (let b = 0; b < this.invadersGrid[i].length; b++) {
+                    this.invadersGrid[i][b].left += this.invadersPace;
+                    this.invadersGrid[i][b].rightEdgePos += this.invadersPace;
+                    this.invadersGrid[i][b].x += this.invadersPace;
+                }
+            }
+        }
+
+        if(direction === 'left') {
+            for (let i = 0; i < this.invadersGrid.length; i++) {
+                for (let b = 0; b < this.invadersGrid[i].length; b++) {
+                    this.invadersGrid[i][b].left -= this.invadersPace;
+                    this.invadersGrid[i][b].rightEdgePos -= this.invadersPace;
+                    this.invadersGrid[i][b].x -= this.invadersPace;
+                }
+            }
+        }
+    }
+
+    updateInvadersView() {
+        for (let i = 0; i < this.invadersGrid.length; i++) {
+            for (let b = 0; b < this.invadersGrid[i].length; b++) {        
+                const invader = getElement('inv' + this.invadersGrid[i][b].id);
+                invader.style.left = this.invadersGrid[i][b].left + 'px';
+            }
+        }
+    }
 
 
       

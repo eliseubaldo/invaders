@@ -24,13 +24,10 @@ class MainControl {
         this.world = new World(invR, invC);
         console.log(this.world.invadersGrid);
         this.attachListeners(this);
-        this.invMove(1000);
-       
+        this.invaderMove(1000);
     }
 
     update(progress) {
-
-      
 
         if (this.state.pressedKeys.left) {
             this.world.player.action('left', this.state.worldBoundaries);
@@ -39,7 +36,7 @@ class MainControl {
             this.world.player.action('right', this.state.worldBoundaries);
         }
         
-      }
+    }
 
     // Listeners
     attachListeners(control) {
@@ -64,10 +61,11 @@ class MainControl {
         }, false);
     }
 
-    invMove(seconds) {
+    invaderMove(seconds) {
        let control = this;
-        let x = setInterval(function() {
-            console.log(control.world.invadersGrid);
+       let x = setInterval(function() {
+            console.log('inv move, inv grid',control.world.invadersGrid);
+            control.state.invadersMovDirection = control.world.moveInvaders(control.state.invadersMovDirection);
             // mover os invaders e passar this.state.worldBoundaries
             
         }, seconds);
