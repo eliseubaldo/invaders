@@ -9,12 +9,14 @@ class MainControl {
                 left: false,
                 right: false,
                 up: false,
-                down: false
+                down: false,
+                space: false
               },
             worldBoundaries: {
                 left: 0,
                 right: this.world.docWidth
             },
+            shooting: false,
             invadersMovDirection: 'right'
         };
         
@@ -34,6 +36,14 @@ class MainControl {
         }
         if (this.state.pressedKeys.right) {
             this.world.player.action('right', this.state.worldBoundaries);
+        }
+        if (this.state.pressedKeys.space) {
+            this.state.shooting = true;
+        }
+
+        if (this.state.shooting) {
+            this.world.shoot();
+            this.state.shooting = this.world.shoot();
         }
         
     }

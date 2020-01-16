@@ -1,6 +1,7 @@
 import Invader from './invader';
 import {getElement} from './utils';
 import Player from './player';
+import Shot from './shot';
 
 class World {
     constructor(invR, invC, element = 'world'){
@@ -17,6 +18,7 @@ class World {
         this.invadersGrid = this.generateInvaders(this.invR, this.invC);
         this.player = new Player('player', this.centerStageX, this.playerStageY, this.element);
         this.invadersPace = 40;
+        this.shooting = false;
     }
 
     addWorld() {
@@ -51,7 +53,7 @@ class World {
       }
 
     moveInvaders(direction) {
-        //loopar na rray e pegar o invader com rightEdgePos maior que todos
+
         if (direction === 'right') {
             let bigger = 0;
             for (let i = 0; i < this.invadersGrid.length; i++) {
@@ -86,25 +88,9 @@ class World {
 
         this.updateInvadersView();
 
-
-        // boundaries para movimento serao esses valores
-
-        // recebe array de invaders, verifica se da pra andar na direcao desejada
-        // atualiza todos as posicoes
-        // loopa na array e atualiza a view (codigo abaixo)
-
         console.log('moved', this.invadersGrid);
 
-        // if(direction === 'left' && this.x > boundaries.left) {
-        //     this.x -= 10;
-        //     getElement(this.id).style.left = this.x+'px';
-        // }
-        // if(direction === 'right' && this.x < boundaries.right) {
-        //     this.x += 10;
-        //     getElement(this.id).style.left = this.x+'px';
-        // }
-        
-        return moveDirection;
+
     }
 
     updateInvadersGrid(direction) {
@@ -136,6 +122,36 @@ class World {
                 invader.style.left = this.invadersGrid[i][b].left + 'px';
             }
         }
+    }
+
+    shoot() {
+        // se nao estiver atirando, adiciona o tiro e move.
+        if(!this.shooting) {
+            console.log('atirando');
+            this.addPlayerShot();
+            this.shooting = true;
+        } else {
+            // se o tiro foi adicionado,move-lo ate o fim ou colisao e retornar falso ao final
+            this.movePlayerShot();
+            //this.shooting = false;
+        }
+        
+        return this.shooting;
+        
+    }
+    
+    addPlayerShot() {
+        this.playerShot = new Shot('playershot', this.player.x, this.player.y, this.element, this.player.playerSize);
+    }
+    
+    movePlayerShot() {
+        console.log('movendo tiro');
+        this.playerShot.y --;
+        
+        const playerShot = getElement('playershot');
+        playerShot.style.top = this.playerShot.y + 'px';
+        
+        
     }
 
 
