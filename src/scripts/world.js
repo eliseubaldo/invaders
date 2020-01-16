@@ -154,6 +154,7 @@ class World {
         
         if (this.playerShot.y < 0) {
             this.playerShot = null;
+            playerShot.remove();
             this.shooting = false;
         }
 
