@@ -146,7 +146,7 @@ class World {
     }
     
     movePlayerShot() {
-        console.log('movendo tiro');
+        
         this.playerShot.y -= 5;
         
         const playerShot = getElement('playershot');
@@ -158,31 +158,32 @@ class World {
             this.shooting = false;
         }
 
-        //check colision
-        this.colisionCheck();
-
     }
 
     colisionCheck() {
+
         // playershot
-        for (let i = 0; i < this.invadersGrid.length; i++) {
-            for (let b = 0; b < this.invadersGrid[i].length; b++) {
-                let invYedge = this.invadersGrid[i][b].y + this.invadersGrid[i][b].invadersSize;
-                let invXedge = this.invadersGrid[i][b].x + this.invadersGrid[i][b].invadersSize;
-                let invX = this.invadersGrid[i][b].x;
-                let invY = this.invadersGrid[i][b].y;
-
-                if(this.playerShot.y <= invYedge && this.playerShot.y >= invY && this.playerShot.x <= invXedge && this.playerShot.x >= invX) {
-                    console.log('collision to:', this.invadersGrid[i][b]);
-                    const playerShot = getElement('playershot');
-                    playerShot.remove();
-                    this.shooting = false;
+        if(this.playerShot) {
+            for (let i = 0; i < this.invadersGrid.length; i++) {
+                for (let b = 0; b < this.invadersGrid[i].length; b++) {
+                    let invYedge = this.invadersGrid[i][b].y + this.invadersGrid[i][b].invadersSize;
+                    let invXedge = this.invadersGrid[i][b].x + this.invadersGrid[i][b].invadersSize;
+                    let invX = this.invadersGrid[i][b].x;
+                    let invY = this.invadersGrid[i][b].y;
+    
+                    if(this.playerShot.y <= invYedge && this.playerShot.y >= invY && this.playerShot.x <= invXedge && this.playerShot.x >= invX) {
+                        console.log('collision to:', this.invadersGrid[i][b]);
+                        const playerShot = getElement('playershot');
+                        playerShot.remove();
+                        this.shooting = false;
+                        const invader = getElement('inv' + this.invadersGrid[i][b].id);
+                        invader.remove();
+                        this.invadersGrid[i].splice(b,1);
+                    }
                 }
-
-
-                
             }
         }
+        
         
     }
 
