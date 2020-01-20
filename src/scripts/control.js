@@ -42,10 +42,9 @@ class MainControl {
         }
 
         if (this.state.shooting) {
-            this.world.shoot();
             this.state.shooting = this.world.shoot();
         }
-        
+
     }
 
     // Listeners
