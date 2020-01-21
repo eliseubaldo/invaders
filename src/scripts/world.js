@@ -171,7 +171,7 @@ class World {
                     let invX = this.invadersGrid[i][b].x;
                     let invY = this.invadersGrid[i][b].y;
     
-                    if(this.playerShot.y <= invYedge && this.playerShot.y >= invY && this.playerShot.x <= invXedge && this.playerShot.x >= invX) {
+                    if(this.playerShot.x < invXedge && this.playerShot.x + this.playerShot.shotSize > invX && this.playerShot.y < invYedge && this.playerShot.y + this.playerShot.shotSize > invY) {
                         console.log('collision to:', this.invadersGrid[i][b]);
                         const playerShot = getElement('playershot');
                         playerShot.remove();
