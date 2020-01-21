@@ -45,8 +45,6 @@ class MainControl {
             this.state.shooting = this.world.shoot();
         }
 
-        this.world.colisionCheck();
-
     }
 
     // Listeners

@@ -147,9 +147,7 @@ class World {
     }
     
     movePlayerShot() {
-        
         this.playerShot.y -= 5;
-        
         const playerShot = getElement('playershot');
         playerShot.style.top = this.playerShot.y + 'px';
         
@@ -158,7 +156,7 @@ class World {
             playerShot.remove();
             this.shooting = false;
         }
-
+        this.colisionCheck();
     }
 
     colisionCheck() {
