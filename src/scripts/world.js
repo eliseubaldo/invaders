@@ -2,6 +2,7 @@ import Invader from './invader';
 import {getElement} from './utils';
 import Player from './player';
 import Shot from './shot';
+import {collisionCheck} from './utils';
 
 class World {
     constructor(invR, invC, element = 'world'){
@@ -166,12 +167,7 @@ class World {
         if(this.playerShot) {
             for (let i = 0; i < this.invadersGrid.length; i++) {
                 for (let b = 0; b < this.invadersGrid[i].length; b++) {
-                    let invYedge = this.invadersGrid[i][b].y + this.invadersGrid[i][b].invadersSize;
-                    let invXedge = this.invadersGrid[i][b].x + this.invadersGrid[i][b].invadersSize;
-                    let invX = this.invadersGrid[i][b].x;
-                    let invY = this.invadersGrid[i][b].y;
-    
-                    if(this.playerShot.x < invXedge && this.playerShot.x + this.playerShot.shotSize > invX && this.playerShot.y < invYedge && this.playerShot.y + this.playerShot.shotSize > invY) {
+                    if(collisionCheck(this.playerShot, this.invadersGrid[i][b])) {
                         console.log('collision to:', this.invadersGrid[i][b]);
                         const playerShot = getElement('playershot');
                         playerShot.remove();

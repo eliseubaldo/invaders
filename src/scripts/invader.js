@@ -2,14 +2,14 @@ import {getElement, offsetElement} from './utils';
 
 class Invader {
     constructor(id, row, col, worldElement, totalCols){
-        this.invadersSize = getElement(worldElement).clientWidth * 0.040;
+        this.size = getElement(worldElement).clientWidth * 0.040;
         const SPACING = 5;
-        this.initialXPos = (getElement(worldElement).clientWidth / 2) - ((totalCols * (this.invadersSize + SPACING)) / 2 ) - ((this.invadersSize + SPACING));
+        this.initialXPos = (getElement(worldElement).clientWidth / 2) - ((totalCols * (this.size + SPACING)) / 2 ) - ((this.size + SPACING));
          
         this.id = id;
-        this.width = this.invadersSize;
-        this.height = this.invadersSize;
-        this.top = row * this.invadersSize + SPACING;
+        this.width = this.size;
+        this.height = this.size;
+        this.top = row * this.size + SPACING;
         // if(col === 0) {
         //     this.left = this.initialXPos;
 
@@ -17,10 +17,10 @@ class Invader {
         // //     this.prevPos = this.initialXPos + this.invadersSize + SPACING;
         // //     this.left = this.prevPos;
         // } else {
-            let prevPos = this.initialXPos + (col * (this.invadersSize + SPACING));
-            this.left = prevPos + this.invadersSize + SPACING;
+            let prevPos = this.initialXPos + (col * (this.size + SPACING));
+            this.left = prevPos + this.size + SPACING;
         // }
-        this.rightEdgePos = this.left + this.invadersSize; 
+        this.rightEdgePos = this.left + this.size; 
         this.worldElement = worldElement;
         this.initiate();
     }

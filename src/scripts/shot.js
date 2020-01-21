@@ -2,14 +2,14 @@ import {getElement} from './utils';
 
 class Shot {
     constructor(id, x, y, parentElement, originWidth){
-        this.shotSize = getElement(parentElement).clientWidth * 0.015;
+        this.size = getElement(parentElement).clientWidth * 0.015;
         this.originWidth = originWidth;
         this.id = id;
         this.x = x ;
         this.y = y ;
         this.parentElement = parentElement;
-        this.width = this.shotSize;
-        this.height = this.shotSize;
+        this.width = this.size;
+        this.height = this.size;
         this.initiate();
     }
 
@@ -19,8 +19,8 @@ class Shot {
                                  width: ${this.width+'px'};
                                  height: ${this.height+'px'};
                                  box-sizing: border-box;
-                                 top:${this.y - this.shotSize +'px'};
-                                 left:${this.x + (this.originWidth / 2 - this.shotSize / 2) +'px'};
+                                 top:${this.y - this.size +'px'};
+                                 left:${this.x + (this.originWidth / 2 - this.size / 2) +'px'};
                                  overflow: hidden;
                                  border: 1px solid green;
                                  background: yellow;`;
