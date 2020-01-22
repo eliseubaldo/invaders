@@ -163,19 +163,34 @@ class World {
 
         // playershot
         if(this.playerShot) {
-            for (let i = 0; i < this.invadersGrid.length; i++) {
-                for (let b = 0; b < this.invadersGrid[i].length; b++) {
-                    if(collisionCheck(this.playerShot, this.invadersGrid[i][b])) {
-                        console.log('collision to:', this.invadersGrid[i][b]);
-                        const playerShot = getElement('playershot');
-                        playerShot.remove();
-                        this.shooting = false;
-                        const invader = getElement('inv' + this.invadersGrid[i][b].id);
-                        invader.remove();
-                        this.invadersGrid[i].splice(b,1);
-                    }
-                }
-            }
+            // for (let i = 0; i < this.invadersGrid.length; i++) {
+            //     for (let b = 0; b < this.invadersGrid[i].length; b++) {
+            //         if(collisionCheck(this.playerShot, this.invadersGrid[i][b])) {
+            //             console.log('collision to:', this.invadersGrid[i][b]);
+            //             const playerShot = getElement('playershot');
+            //             playerShot.remove();
+            //             this.shooting = false;
+            //             const invader = getElement('inv' + this.invadersGrid[i][b].id);
+            //             invader.remove();
+            //             this.invadersGrid[i].splice(b,1);
+            //         }
+            //     }
+            // }
+
+            this.invadersGrid.forEach((row, ia)=> {
+                    row.forEach((col, ib)=> {
+                        if(collisionCheck(this.playerShot, col)) {
+                            console.log('collision to:', col);
+                            const playerShot = getElement('playershot');
+                            playerShot.remove();
+                            this.shooting = false;
+                            const invader = getElement('inv' + col.id);
+                            invader.remove();
+                            this.invadersGrid[ia].splice(ib,1);
+                        }
+                    });
+            });
+
         }
         
         
