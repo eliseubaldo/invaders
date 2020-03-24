@@ -154,9 +154,8 @@ class World {
         playerShot.style.top = this.playerShot.y + 'px';
         
         if (this.playerShot.y < 0) {
-            this.playerShot = null;
             playerShot.remove();
-            this.playerShot = null;
+            this.playerShot = undefined;
             this.shooting = false;
         }
         this.colisionCheck();
@@ -193,7 +192,7 @@ class World {
 
 
     colisionCheck() {
-
+        console.log('pshot', this.playerShot);
         // playershot
         if(this.playerShot) {
             // for (let i = 0; i < this.invadersGrid.length; i++) {
@@ -212,15 +211,19 @@ class World {
 
             this.invadersGrid.forEach((row, ia)=> {
                     row.forEach((col, ib)=> {
-                        if(collisionCheck(this.playerShot, col)) {
-                            console.log('collision to:', col);
-                            const playerShot = getElement('playershot');
-                            if (playerShot ) { playerShot.remove(); };
-                            this.shooting = false;
-                            const invader = getElement('inv' + col.id);
-                            invader.remove();
-                            this.invadersGrid[ia].splice(ib,1);
-                            
+                        if (this.playerShot) {
+                            if(collisionCheck(this.playerShot, col)) {
+                                console.log('collision to:', col);
+                                const playerShot = getElement('playershot');
+                                if (playerShot ) { playerShot.remove(); };
+                                this.playerShot = undefined;
+                                this.shooting = false;
+                                const invader = getElement('inv' + col.id);
+                                invader.remove();
+                                this.invadersGrid[ia].splice(ib,1);
+                                
+                            }
+
                         }
                     });
             });

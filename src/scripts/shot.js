@@ -32,31 +32,7 @@ class Shot {
         
     }
 
-    action(action, boundaries) {
-
-        switch(action){
-            case 'left':
-            case 'right':
-               this.move(action, boundaries);
-            break;
-            case 'space':
-                this.shoot();
-            break;
-        }
-    }
-
-    move(direction, boundaries){
-        
-        if(direction === 'left' && this.x > boundaries.left) {
-            this.x -= 10;
-            getElement(this.id).style.left = this.x+'px';
-        }
-        if(direction === 'right' && this.x < boundaries.right) {
-            this.x += 10;
-            getElement(this.id).style.left = this.x+'px';
-        }
-        
-    }
+    
 
 }
 
