@@ -17,3 +17,16 @@ export function collisionCheck(objA, objB) {
     return true;  
     } else return false;
 }
+
+export function shouldInvaderShot() {
+  const rnd = Math.random() * 10;
+  return rnd < 5;
+}
+
+export function getRandomInvader(invaderGrid) {
+  console.log('the grid:', invaderGrid);
+  const rndRow = Math.floor(Math.random() * invaderGrid.length);
+  const rndCol = Math.floor(Math.random() * invaderGrid[rndRow].length);
+  console.log('sorteado', invaderGrid[rndRow][rndCol]);
+  return invaderGrid[rndRow][rndCol];
+}

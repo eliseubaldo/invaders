@@ -1,4 +1,5 @@
 import World from './world';
+import {shouldInvaderShot} from './utils';
 
 class MainControl {
     constructor(){
@@ -17,7 +18,8 @@ class MainControl {
                 right: this.world.docWidth
             },
             shooting: false,
-            invadersMovDirection: 'right'
+            invadersMovDirection: 'right',
+            invadersShotAmount: 0
         };
         
     }
@@ -45,6 +47,8 @@ class MainControl {
             this.state.shooting = this.world.shoot();
         }
 
+        this.state.invadersShotAmount  = this.world.moveInvaderShot();
+
     }
 
     // Listeners
@@ -71,13 +75,18 @@ class MainControl {
     }
 
     invaderMove(seconds) {
-       let control = this;
-       let x = setInterval(function() {
-            console.log('inv move, inv grid',control.world.invadersGrid);
-            control.state.invadersMovDirection = control.world.moveInvaders(control.state.invadersMovDirection);
-            // mover os invaders e passar this.state.worldBoundaries
-            
-        }, seconds);
+        let control = this;
+        let x = setInterval(function() {
+                //console.log('inv move, inv grid',control.world.invadersGrid);
+                control.state.invadersMovDirection = control.world.moveInvaders(control.state.invadersMovDirection);
+                // mover os invaders e passar this.state.worldBoundaries
+                if (control.state.invadersShotAmount < 2) {
+                    if (shouldInvaderShot()) {
+                        control.state.invadersShotAmount = control.world.addInvaderShot(control.state.invadersShotAmount);
+                    }
+                }
+                
+            }, seconds);
     }
    
 

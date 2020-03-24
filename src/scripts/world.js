@@ -2,10 +2,10 @@ import Invader from './invader';
 import {getElement} from './utils';
 import Player from './player';
 import Shot from './shot';
-import {collisionCheck} from './utils';
+import {collisionCheck, getRandomInvader} from './utils';
 
 class World {
-    constructor(invR, invC, element = 'world'){
+    constructor(invR, invC, element = 'world') {
         this.element = element;
         this.invGroupEl = 'invadersGroup';
         this.invR = invR;
@@ -20,6 +20,8 @@ class World {
         this.player = new Player('player', this.centerStageX, this.playerStageY, this.element);
         this.invadersPace = 40;
         this.shooting = false;
+        this.invaderShot = [];
+        this.invaderShotAcc = 0;
     }
 
     addWorld() {
@@ -145,7 +147,7 @@ class World {
     addPlayerShot() {
         this.playerShot = new Shot('playershot', this.player.x, this.player.y, this.element, this.player.playerSize);
     }
-    
+
     movePlayerShot() {
         this.playerShot.y -= 5;
         const playerShot = getElement('playershot');
@@ -154,10 +156,41 @@ class World {
         if (this.playerShot.y < 0) {
             this.playerShot = null;
             playerShot.remove();
+            this.playerShot = null;
             this.shooting = false;
         }
         this.colisionCheck();
     }
+    
+    addInvaderShot(currentAmount) {
+        const rndInv = getRandomInvader(this.invadersGrid);
+        console.log('rnd inv:',rndInv);
+        if (currentAmount < 2) {
+            this.invaderShot.push(new Shot('iShot'+ this.invaderShotAcc, rndInv.x, rndInv.y, this.element, this.player.playerSize));
+            this.invaderShotAcc ++;
+            return ++currentAmount;
+        } else {
+            return currentAmount;
+        }
+    }
+
+    moveInvaderShot() {
+        this.invaderShot.forEach((shot, index) => {
+            shot.y += 5;
+            const shotEl = getElement(shot.id);
+            shotEl.style.top = shot.y + 'px';
+            
+            if (shot.y > 1000) {
+                this.invaderShot.splice(index,1);
+                shotEl.remove();
+                return this.invaderShot.length;
+                //this.shooting = false;
+            }
+            this.colisionCheck();
+        });
+        return this.invaderShot.length;
+    }
+
 
     colisionCheck() {
 
@@ -182,15 +215,20 @@ class World {
                         if(collisionCheck(this.playerShot, col)) {
                             console.log('collision to:', col);
                             const playerShot = getElement('playershot');
-                            playerShot.remove();
+                            if (playerShot ) { playerShot.remove(); };
                             this.shooting = false;
                             const invader = getElement('inv' + col.id);
                             invader.remove();
                             this.invadersGrid[ia].splice(ib,1);
+                            
                         }
                     });
             });
 
+        }
+
+        if (this.invaderShot.length > 0) {
+            // console.log('verificando tiro inimigo');
         }
         
         
