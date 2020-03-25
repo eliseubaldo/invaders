@@ -3,6 +3,7 @@ import {shouldInvaderShot} from './utils';
 
 class MainControl {
     constructor(){
+        this.interval = undefined;
         this.initiate(5,11);
 
         this.state = {
@@ -21,6 +22,8 @@ class MainControl {
             invadersMovDirection: 'right',
             invadersShotAmount: 0
         };
+
+        
         
     }
 
@@ -29,6 +32,7 @@ class MainControl {
         console.log(this.world.invadersGrid);
         this.attachListeners(this);
         this.invaderMove(1000);
+        console.log('inernval:', this.interval);
     }
 
     update(progress) {
@@ -49,6 +53,13 @@ class MainControl {
 
         this.state.invadersShotAmount  = this.world.moveInvaderShot();
 
+        if (this.world.playerLives === 0) {
+            // game over
+            // this.removeListeners(this);
+
+            this.showGameOver();
+        };
+
     }
 
     // Listeners
@@ -63,12 +74,12 @@ class MainControl {
             32: 'space'
 
         };
-        document.addEventListener('keydown', function (event) {
+        document.addEventListener('keydown', function _listener(event) {
             let key = keyMap[event.keyCode];
             control.state.pressedKeys[key] = true;
         }, false);
 
-        document.addEventListener('keyup', function (event) {
+        document.addEventListener('keyup', function _listener(event) {
             let key = keyMap[event.keyCode];
             control.state.pressedKeys[key] = false;
         }, false);
@@ -76,8 +87,8 @@ class MainControl {
 
     invaderMove(seconds) {
         let control = this;
-        let x = setInterval(function() {
-                //console.log('inv move, inv grid',control.world.invadersGrid);
+        console.log('isso:', this);
+        this.interval = setInterval(function() {
                 control.state.invadersMovDirection = control.world.moveInvaders(control.state.invadersMovDirection);
                 // mover os invaders e passar this.state.worldBoundaries
                 if (control.state.invadersShotAmount < 2) {
@@ -87,6 +98,16 @@ class MainControl {
                 }
                 
             }, seconds);
+    }
+
+
+    showGameOver() {
+        this.terminate();     
+    }
+
+    terminate() {
+        clearInterval(this.interval);
+        
     }
    
 
