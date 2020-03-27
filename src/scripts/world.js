@@ -45,12 +45,12 @@ class World {
 
     generateInvaders(rows, cols) {
         let arr = new Array(rows);
-        
+        const firstRows = Math.floor((rows/2) + 1);
         for(let r=0; r<rows; r++) {
           arr[r] = [];
 
             for(let c=0; c<cols; c++) {
-                arr[r].push( new Invader(`${r+''+c}`, r, c, this.element, this.invC));
+                arr[r].push( new Invader(`${r+''+c}`, r, c, this.element, this.invC, firstRows));
             }
         }
         return arr;

@@ -23,6 +23,11 @@ export function shouldInvaderShot() {
   return rnd < 5;
 }
 
+export function raffleInvaderType() {
+  const rnd = Math.random() * 2;
+  return rnd < 1;
+}
+
 export function getRandomInvader(invaderGrid) {
   console.log('the grid:', invaderGrid);
   const rndRow = Math.floor(Math.random() * invaderGrid.length);

@@ -6,3 +6,39 @@ body {
   margin: 0;
   font-family: sans-serif;
 }
+
+#player {
+  color: red;
+  .player {
+    position: absolute;
+    bottom: 0;
+
+    // path {
+    //   fill: red;
+    // }
+  }
+}
+
+@keyframes hideshow {
+  0% { opacity: 1; }
+  50% { opacity: 1; }
+  51% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes inversehideshow {
+  0% { opacity: 0; }
+  50% { opacity: 0; }
+  51% { opacity: 1; }
+  100% { opacity: 1; }
+} 
+
+.invader {
+  g.step1{
+    animation: hideshow 2s ease infinite;
+  }
+  g.step2{
+    animation: inversehideshow 2s ease infinite;
+  }
+}
+
