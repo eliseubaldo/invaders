@@ -88,16 +88,16 @@ class MainControl {
     invaderMove(seconds) {
         let control = this;
         console.log('isso:', this);
-        // this.interval = setInterval(function() {
-        //         control.state.invadersMovDirection = control.world.moveInvaders(control.state.invadersMovDirection);
-        //         // mover os invaders e passar this.state.worldBoundaries
-        //         if (control.state.invadersShotAmount < 2) {
-        //             if (shouldInvaderShot()) {
-        //                 control.state.invadersShotAmount = control.world.addInvaderShot(control.state.invadersShotAmount);
-        //             }
-        //         }
+        this.interval = setInterval(function() {
+                control.state.invadersMovDirection = control.world.moveInvaders(control.state.invadersMovDirection);
+                // mover os invaders e passar this.state.worldBoundaries
+                if (control.state.invadersShotAmount < 2) {
+                    if (shouldInvaderShot()) {
+                        control.state.invadersShotAmount = control.world.addInvaderShot(control.state.invadersShotAmount);
+                    }
+                }
                 
-        //     }, seconds);
+            }, seconds);
     }
 
 
