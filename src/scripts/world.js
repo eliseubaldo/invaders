@@ -23,6 +23,9 @@ class World {
         this.invaderShot = [];
         this.invaderShotAcc = 0;
         this.playerLives = 2;
+        this.invadersDown = 0;
+        this.invadersSpeed = 0;
+        this.invadersThirds = [Math.floor(this.totalInvaders * 0.3), Math.floor(this.totalInvaders * 0.6), Math.floor(this.totalInvaders * 0.9)];
     }
 
     addWorld() {
@@ -207,6 +210,7 @@ class World {
                                 const invader = getElement('inv' + col.id);
                                 invader.remove();
                                 this.removeInvaderFromGrid(ia, ib);
+                                this.updateInvadersSpeed();
                             }
                         }
                     });
@@ -240,6 +244,21 @@ class World {
         this.invadersGrid[indexRow].splice(indexCol,1);
         if (this.invadersGrid[indexRow].length === 0) {
             this.invadersGrid.splice(indexRow,1);
+        }
+
+    }
+
+    updateInvadersSpeed() {
+        this.invadersDown ++;
+        console.log(this.invadersDown,this.invadersThirds[0], this.invadersThirds[1], this.invadersThirds[2] );
+        if (this.invadersDown >= this.invadersThirds[0]) {
+            this.invadersSpeed = 200;
+        } 
+        if (this.invadersDown >= this.invadersThirds[1]) {
+            this.invadersSpeed = 450;
+        }
+        if (this.invadersDown >= this.invadersThirds[2]) {
+            this.invadersSpeed = 651;
         }
 
     }

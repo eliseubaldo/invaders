@@ -20,7 +20,8 @@ class MainControl {
             },
             shooting: false,
             invadersMovDirection: 'right',
-            invadersShotAmount: 0
+            invadersShotAmount: 0,
+            invadersSpeed: 0
         };
 
         
@@ -52,6 +53,12 @@ class MainControl {
         }
 
         this.state.invadersShotAmount  = this.world.moveInvaderShot();
+
+        if (this.state.invadersSpeed != this.world.invadersSpeed) {
+            console.log('tehir speed:',this.world.invadersSpeed);
+            this.state.invadersSpeed = this.world.invadersSpeed;
+            this.updatedInvadersSpeed(this.state.invadersSpeed);
+        };
 
         if (this.world.playerLives === 0) {
             // game over
@@ -98,6 +105,13 @@ class MainControl {
                 }
                 
             }, seconds);
+    }
+
+    updatedInvadersSpeed(newSpeed) {
+        clearInterval(this.interval);
+        console.log('speed:', 1000-newSpeed);
+        this.invaderMove(1000 - newSpeed);
+
     }
 
 

@@ -19,12 +19,12 @@ class Shot {
                                  width: ${this.width+'px'};
                                  height: ${this.height+'px'};
                                  box-sizing: border-box;
-                                 top:${this.y - this.size +'px'};
+                                 top:${this.y + 'px'};
                                  left:${this.x + (this.originWidth / 2 - this.size / 2) +'px'};
                                  overflow: hidden;
                                  border: 1px solid green;
                                  background: yellow;`;
-        
+                                 
         const shot = document.createElement('div');
         shot.setAttribute('id', this.id);
         parent.appendChild(shot);
