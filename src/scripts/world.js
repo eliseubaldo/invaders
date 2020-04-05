@@ -25,7 +25,10 @@ class World {
         this.playerLives = 2;
         this.invadersDown = 0;
         this.invadersSpeed = 0;
-        this.invadersThirds = [Math.floor(this.totalInvaders * 0.3), Math.floor(this.totalInvaders * 0.6), Math.floor(this.totalInvaders * 0.9)];
+        this.invaderConquerCoor = this.player.y;
+        console.log('conquer:',this.invaderConquerCoor);
+        this.conquered = false;
+        this.increaseInvaderSpeedRate = Math.floor(this.totalInvaders / this.invR);
     }
 
     addWorld() {
@@ -48,7 +51,7 @@ class World {
 
     generateInvaders(rows, cols) {
         let arr = new Array(rows);
-        const firstRows = Math.floor((rows/2) + 1);
+        const firstRows = Math.floor((rows/3) + 1);
         for(let r=0; r<rows; r++) {
           arr[r] = [];
 
@@ -71,6 +74,7 @@ class World {
 
             if (bigger + this.invadersPace > this.docWidth) {
                 movingDirection = 'left';
+                this.updateInvadersGrid('down');
                 this.updateInvadersGrid('left');
             } else {
                 this.updateInvadersGrid('right');
@@ -89,6 +93,7 @@ class World {
 
             if (smaller - this.invadersPace < 0) {
                 movingDirection = 'right';
+                this.updateInvadersGrid('down');
                 this.updateInvadersGrid('right');
             } else {
                 this.updateInvadersGrid('left');
@@ -121,6 +126,23 @@ class World {
                 }
             }
         }
+
+        if(direction === 'down') {
+            let closerToPlayer = 0;
+            for (let i = 0; i < this.invadersGrid.length; i++) {
+                for (let b = 0; b < this.invadersGrid[i].length; b++) {
+                    this.invadersGrid[i][b].y += this.invadersPace;
+                    this.invadersGrid[i][b].bottomEdgePos += this.invadersPace;
+                    if (this.invadersGrid[i][b].bottomEdgePos > closerToPlayer) {
+                        closerToPlayer = this.invadersGrid[i][b].bottomEdgePos;
+                    };
+                }
+            }
+            // invaders got to player proximity
+            if (closerToPlayer >=  this.invaderConquerCoor) {
+                this.conquered = true;
+            }
+        }
     }
 
     updateInvadersView() {
@@ -128,6 +150,7 @@ class World {
             for (let b = 0; b < this.invadersGrid[i].length; b++) {        
                 const invader = getElement('inv' + this.invadersGrid[i][b].id);
                 invader.style.left = this.invadersGrid[i][b].left + 'px';
+                invader.style.top = this.invadersGrid[i][b].y + 'px';
             }
         }
     }
@@ -250,17 +273,13 @@ class World {
 
     updateInvadersSpeed() {
         this.invadersDown ++;
-        console.log(this.invadersDown,this.invadersThirds[0], this.invadersThirds[1], this.invadersThirds[2] );
-        if (this.invadersDown >= this.invadersThirds[0]) {
-            this.invadersSpeed = 200;
-        } 
-        if (this.invadersDown >= this.invadersThirds[1]) {
-            this.invadersSpeed = 450;
+        if (this.invadersDown === this.increaseInvaderSpeedRate) {
+            this.invadersSpeed += 250;
+            if (this.invadersSpeed >= 1000) {
+                this.invadersSpeed = 880;
+            }
+            this.invadersDown = 0;
         }
-        if (this.invadersDown >= this.invadersThirds[2]) {
-            this.invadersSpeed = 651;
-        }
-
     }
 
 

@@ -35,10 +35,17 @@ body {
 
 .invader {
   g.step1{
-    animation: hideshow 2s ease infinite;
+    animation: hideshow 1s none infinite;
   }
   g.step2{
-    animation: inversehideshow 2s ease infinite;
+    animation: inversehideshow 1s none infinite;
   }
 }
 
+#playershot {
+  text-align: center;
+  svg {
+    display: block;
+    margin: 0 auto;
+  }
+}

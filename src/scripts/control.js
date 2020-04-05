@@ -67,6 +67,10 @@ class MainControl {
             this.showGameOver();
         };
 
+        if (this.world.conquered) {
+            this.showGameOver();
+        }
+
     }
 
     // Listeners
