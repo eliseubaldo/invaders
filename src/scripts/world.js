@@ -241,8 +241,12 @@ class World {
         }
 
         if (this.invaderShot.length > 0) {
-            this.invaderShot.forEach(shot => {
+            this.invaderShot.forEach((shot,index) => {
+                console.log('shot', shot);
                 if(collisionCheck(this.player, shot)) {
+                    const invShot = getElement(shot.id);
+                    invShot.remove();
+                    this.invaderShot.splice(index);
                    this.updatePlayerStatus();
 
                 }
