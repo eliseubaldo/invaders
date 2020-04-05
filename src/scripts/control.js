@@ -1,5 +1,5 @@
 import World from './world';
-import {shouldInvaderShot} from './utils';
+import {shouldInvaderShot, getElement} from './utils';
 
 class MainControl {
     constructor(){
@@ -71,6 +71,8 @@ class MainControl {
             this.showGameOver();
         }
 
+        this.updatePanel();
+
     }
 
     // Listeners
@@ -126,6 +128,11 @@ class MainControl {
     terminate() {
         clearInterval(this.interval);
         
+    }
+
+    updatePanel() {
+        const playerLives = getElement('playerlives');
+        playerLives.innerHTML = this.world.playerLives;
     }
    
 
