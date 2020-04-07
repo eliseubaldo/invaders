@@ -22,7 +22,7 @@ class Shot {
                                  top:${this.y + 'px'};
                                  left:${this.x + (this.originWidth / 2 - this.size / 2) +'px'};
                                  overflow: hidden;
-                                 // border: 1px solid green;`;
+                                 //border: 1px solid green;`;
                                  
         const shot = document.createElement('div');
         shot.setAttribute('id', this.id);
@@ -37,14 +37,11 @@ class Shot {
     }
 
     addplayerShotSVG() {
-        const SVG = `<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	  viewBox="0 0 20.113 47.327" enable-background="new 0 0 20.113 47.327"
-	 xml:space="preserve" class="shot">
-     <g>
-     <path fill="#4678AD" d="M10.057,0C4.503,0,0,14.206,0,19.76v19.65h0.007c0.072,2.279,4.54,7.918,10.05,7.918
-         s9.979-5.639,10.051-7.918h0.006V19.76C20.113,14.205,15.611,0,10.057,0z"/>
- </g>
-    </svg>`;
+        const SVG = `<svg width="9" height="19" viewBox="0 0 22 45" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+         <g id="svg_1">
+          <path id="svg_2" d="m10.057,0c-5.554,0 -10.057,14.206 -10.057,19.76l0,19.65l0.007,0c0.072,2.279 4.54,7.918 10.05,7.918s9.979,-5.639 10.051,-7.918l0.006,0l0,-19.65c-0.001,-5.555 -4.503,-19.76 -10.057,-19.76z" fill="#4678AD"/>
+         </g>
+       </svg>`;
         return SVG;
     }
 

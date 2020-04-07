@@ -27,31 +27,51 @@ body {
 
 @keyframes hideshow {
   0% { opacity: 1; }
-  50% { opacity: 1; }
+  50.999% { opacity: 1; }
   51% { opacity: 0; }
   100% { opacity: 0; }
 }
 
 @keyframes inversehideshow {
   0% { opacity: 0; }
-  50% { opacity: 0; }
+  50.999% { opacity: 0; }
   51% { opacity: 1; }
   100% { opacity: 1; }
 } 
 
 .invader {
-  g.step1{
+  g.step1 {
     animation: hideshow 1s none infinite;
   }
-  g.step2{
+  g.step2 {
     animation: inversehideshow 1s none infinite;
   }
+  g.explosion {
+    display: none;
+  }
 }
+
+.invader.die {
+  g.step1 {
+    display:none;
+  }
+  g.step2 {
+    display:none;
+  }
+  g.explosion {
+    display: block;
+  }
+}
+
+
 
 #playershot {
   text-align: center;
   svg {
     display: block;
     margin: 0 auto;
+    //width: 18px;
+    position: relative;
+
   }
 }

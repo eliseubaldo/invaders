@@ -231,9 +231,12 @@ class World {
                                 this.playerShot = undefined;
                                 this.shooting = false;
                                 const invader = getElement('inv' + col.id);
-                                invader.remove();
-                                this.removeInvaderFromGrid(ia, ib);
-                                this.updateInvadersSpeed();
+                                invader.classList.add('die');
+                                setTimeout( ()=> {
+                                    invader.remove();
+                                    this.removeInvaderFromGrid(ia, ib);
+                                    this.updateInvadersSpeed();
+                                }, 150);
                             }
                         }
                     });
