@@ -22,7 +22,7 @@ class World {
         this.shooting = false;
         this.invaderShot = [];
         this.invaderShotAcc = 0;
-        this.playerLives = 2;
+        this.playerLives = 7;
         this.invadersDown = 0;
         this.invadersSpeed = 0;
         this.invaderConquerCoor = this.player.y;
@@ -249,9 +249,12 @@ class World {
                 if(collisionCheck(this.player, shot)) {
                     const invShot = getElement(shot.id);
                     invShot.remove();
-                    this.invaderShot.splice(index);
-                   this.updatePlayerStatus();
-
+                    this.invaderShot.splice(index,1);
+                    const player = getElement('player');
+                    player.classList.add('die');
+                    setTimeout( ()=> {
+                        this.updatePlayerStatus();
+                    }, 150);
                 }
             });
         }

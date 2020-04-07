@@ -7,17 +7,23 @@ body {
   font-family: sans-serif;
 }
 
-#player {
-  color: red;
-  .player {
+
+  #player {
     position: absolute;
     bottom: 0;
-
-    // path {
-    //   fill: red;
-    // }
+    g.explosion {
+      display: none;
+    }
   }
-}
+  
+  #player.die {
+    g.ship {
+      display: none;
+    }
+    g.explosion {
+      display: block;
+    }
+  }
 
 .panel {
   color: white;
