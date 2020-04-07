@@ -55,7 +55,6 @@ class MainControl {
         this.state.invadersShotAmount  = this.world.moveInvaderShot();
 
         if (this.state.invadersSpeed != this.world.invadersSpeed) {
-            console.log('tehir speed:',this.world.invadersSpeed);
             this.state.invadersSpeed = this.world.invadersSpeed;
             this.updatedInvadersSpeed(this.state.invadersSpeed);
         };
@@ -67,8 +66,12 @@ class MainControl {
             this.showGameOver();
         };
 
-        if (this.world.conquered) {
+        if (this.world.isGameOver) {
             this.showGameOver();
+        }
+
+        if (this.world.isGameWin) {
+            this.showGameWin();
         }
 
         this.updatePanel();
@@ -100,7 +103,6 @@ class MainControl {
 
     invaderMove(seconds) {
         let control = this;
-        console.log('isso:', this);
         this.interval = setInterval(function() {
                 control.state.invadersMovDirection = control.world.moveInvaders(control.state.invadersMovDirection);
                 // mover os invaders e passar this.state.worldBoundaries
@@ -115,18 +117,21 @@ class MainControl {
 
     updatedInvadersSpeed(newSpeed) {
         clearInterval(this.interval);
-        console.log('speed:', 1000-newSpeed);
         this.invaderMove(1000 - newSpeed);
 
     }
 
 
     showGameOver() {
-        this.terminate();     
+        clearInterval(this.interval);
+        const gameoverPanel = getElement('gameover');
+        gameoverPanel.style.display = 'flex';   
     }
 
-    terminate() {
+    showGameWin() {
         clearInterval(this.interval);
+        const gameoverPanel = getElement('gamewin');
+        gameoverPanel.style.display = 'flex';
         
     }
 

@@ -20,14 +20,14 @@ class World {
         this.player = new Player('player', this.centerStageX, this.playerStageY, this.element);
         this.invadersPace = 40;
         this.shooting = false;
+        this.isGameOver = false;
+        this.isGameWin = false;
         this.invaderShot = [];
         this.invaderShotAcc = 0;
-        this.playerLives = 7;
+        this.playerLives = 2;
         this.invadersDown = 0;
         this.invadersSpeed = 0;
         this.invaderConquerCoor = this.player.y;
-        console.log('conquer:',this.invaderConquerCoor);
-        this.conquered = false;
         this.increaseInvaderSpeedRate = Math.floor(this.totalInvaders / this.invR);
     }
 
@@ -80,7 +80,6 @@ class World {
                 this.updateInvadersGrid('right');
                 movingDirection = 'right';
             }
-            console.log('biger:',bigger);
         }
 
         if (direction === 'left') {
@@ -99,7 +98,6 @@ class World {
                 this.updateInvadersGrid('left');
                 movingDirection = 'left';
             }
-            console.log('smaller:',smaller);
         }
 
         this.updateInvadersView();
@@ -140,7 +138,7 @@ class World {
             }
             // invaders got to player proximity
             if (closerToPlayer >=  this.invaderConquerCoor) {
-                this.conquered = true;
+                this.isGameOver = true;
             }
         }
     }
@@ -158,7 +156,6 @@ class World {
     shoot() {
         // se nao estiver atirando, adiciona o tiro e move.
         if(!this.shooting) {
-            console.log('atirando');
             this.addPlayerShot();
             this.shooting = true;
         } else {
@@ -190,7 +187,6 @@ class World {
     
     addInvaderShot(currentAmount) {
         const rndInv = getRandomInvader(this.invadersGrid);
-        console.log('rnd inv:',rndInv);
         if (currentAmount < 2) {
             this.invaderShot.push(new Shot('iShot'+ this.invaderShotAcc, rndInv.x, rndInv.y, this.element, this.player.playerSize));
             this.invaderShotAcc ++;
@@ -206,7 +202,7 @@ class World {
             const shotEl = getElement(shot.id);
             shotEl.style.top = shot.y + 'px';
             
-            if (shot.y > 1000) {
+            if (shot.y > this.docHeight) {
                 this.invaderShot.splice(index,1);
                 shotEl.remove();
                 return this.invaderShot.length;
@@ -225,7 +221,6 @@ class World {
                     row.forEach((col, ib)=> {
                         if (this.playerShot) {
                             if(collisionCheck(this.playerShot, col)) {
-                                console.log('collision to:', col);
                                 const playerShot = getElement('playershot');
                                 if (playerShot) { playerShot.remove(); };
                                 this.playerShot = undefined;
@@ -236,6 +231,7 @@ class World {
                                     invader.remove();
                                     this.removeInvaderFromGrid(ia, ib);
                                     this.updateInvadersSpeed();
+                                    this.checkInvadersStatus();
                                 }, 150);
                             }
                         }
@@ -245,7 +241,6 @@ class World {
 
         if (this.invaderShot.length > 0) {
             this.invaderShot.forEach((shot,index) => {
-                console.log('shot', shot);
                 if(collisionCheck(this.player, shot)) {
                     const invShot = getElement(shot.id);
                     invShot.remove();
@@ -269,7 +264,7 @@ class World {
          if (this.playerLives > 0) {
             this.player = new Player('player', this.centerStageX, this.playerStageY, this.element);
          } else {
-             console.log('GAME OVER');
+            this.isGameOver = true;
          }
     }
 
@@ -289,6 +284,13 @@ class World {
                 this.invadersSpeed = 880;
             }
             this.invadersDown = 0;
+        }
+    }
+
+    checkInvadersStatus() {
+        const invadersLeft = [].concat(...this.invadersGrid);
+        if (invadersLeft.length <= 0) {
+            this.isGameWin = true;
         }
     }
 
