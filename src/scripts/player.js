@@ -54,7 +54,7 @@ class Player {
             this.x -= 10;
             getElement(this.id).style.left = this.x + 'px';
         }
-        if (direction === 'right' && this.x < boundaries.right) {
+        if (direction === 'right' && this.x + this.width < boundaries.right) {
             this.x += 10;
             getElement(this.id).style.left = this.x + 'px';
         }

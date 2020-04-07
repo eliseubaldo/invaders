@@ -39,10 +39,14 @@ class MainControl {
     update(progress) {
 
         if (this.state.pressedKeys.left) {
-            this.world.player.action('left', this.state.worldBoundaries);
+            if (this.world.player) {
+                this.world.player.action('left', this.state.worldBoundaries);
+            }
         }
         if (this.state.pressedKeys.right) {
+            if (this.world.player) {
             this.world.player.action('right', this.state.worldBoundaries);
+            }
         }
         if (this.state.pressedKeys.space) {
             this.state.shooting = true;

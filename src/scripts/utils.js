@@ -29,3 +29,29 @@ export function getRandomInvader(invaderGrid) {
   const rndCol = Math.floor(Math.random() * invaderGrid[rndRow].length);
   return invaderGrid[rndRow][rndCol];
 }
+
+export function playsound(soundname) {
+  let sound;
+  switch (soundname) {
+    case 'playershot':
+      sound = new Audio('src/sounds/playershot.wav');
+      sound.play();
+    break;
+    case 'invadershot':
+      sound = new Audio('src/sounds/virusshot.wav');
+      sound.play();
+    break;
+    case 'invaderexplodes':
+      sound = new Audio('src/sounds/explodes.wav');
+      sound.play();
+    break;
+    case 'playerexplodes':
+      sound = new Audio('src/sounds/playerexplodes.wav');
+      sound.play();
+    break;
+
+  
+    default:  
+      break;
+  }
+}

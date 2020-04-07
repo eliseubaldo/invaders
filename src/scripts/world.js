@@ -1,5 +1,5 @@
 import Invader from './invader';
-import {getElement} from './utils';
+import {getElement, playsound} from './utils';
 import Player from './player';
 import Shot from './shot';
 import {collisionCheck, getRandomInvader} from './utils';
@@ -24,7 +24,7 @@ class World {
         this.isGameWin = false;
         this.invaderShot = [];
         this.invaderShotAcc = 0;
-        this.playerLives = 2;
+        this.playerLives = 3;
         this.invadersDown = 0;
         this.invadersSpeed = 0;
         this.invaderConquerCoor = this.player.y;
@@ -169,13 +169,19 @@ class World {
     }
     
     addPlayerShot() {
-        this.playerShot = new Shot('playershot', this.player.x, this.player.y, this.element, this.player.playerSize);
+        if (this.player) {
+            this.playerShot = new Shot('playershot', this.player.x, this.player.y, this.element, this.player.playerSize);
+            playsound('playershot');
+        }
     }
 
     movePlayerShot() {
-        this.playerShot.y -= 5;
-        const playerShot = getElement('playershot');
-        playerShot.style.top = this.playerShot.y + 'px';
+        if (this.playerShot) {
+            this.playerShot.y -= 5;
+            const playerShot = getElement('playershot');
+            playerShot.style.top = this.playerShot.y + 'px';
+
+        }
         
         if (this.playerShot.y < 0) {
             playerShot.remove();
@@ -188,8 +194,9 @@ class World {
     addInvaderShot(currentAmount) {
         const rndInv = getRandomInvader(this.invadersGrid);
         if (currentAmount < 2) {
-            this.invaderShot.push(new Shot('iShot'+ this.invaderShotAcc, rndInv.x, rndInv.y, this.element, this.player.playerSize));
+            this.invaderShot.push(new Shot('iShot'+ this.invaderShotAcc, rndInv.x, rndInv.y, this.element, 60));
             this.invaderShotAcc ++;
+            playsound('invadershot');
             return ++currentAmount;
         } else {
             return currentAmount;
@@ -227,6 +234,7 @@ class World {
                                 this.shooting = false;
                                 const invader = getElement('inv' + col.id);
                                 invader.classList.add('die');
+                                playsound('invaderexplodes');
                                 setTimeout( ()=> {
                                     invader.remove();
                                     this.removeInvaderFromGrid(ia, ib);
@@ -241,15 +249,20 @@ class World {
 
         if (this.invaderShot.length > 0) {
             this.invaderShot.forEach((shot,index) => {
-                if(collisionCheck(this.player, shot)) {
-                    const invShot = getElement(shot.id);
-                    invShot.remove();
-                    this.invaderShot.splice(index,1);
-                    const player = getElement('player');
-                    player.classList.add('die');
-                    setTimeout( ()=> {
-                        this.updatePlayerStatus();
-                    }, 150);
+                if (this.player) { 
+
+                    if(collisionCheck(this.player, shot)) {
+                        const invShot = getElement(shot.id);
+                        invShot.remove();
+                        this.invaderShot.splice(index,1);
+                        const player = getElement('player');
+                        player.classList.add('die');
+                        playsound('playerexplodes');
+                        this.player = null;
+                        setTimeout( ()=> {
+                            this.updatePlayerStatus();
+                        }, 150);
+                    }
                 }
             });
         }
@@ -259,7 +272,11 @@ class World {
 
     updatePlayerStatus() {
         const player = getElement('player');
-         if (player) { player.remove(); };
+         if (player) { 
+             player.remove(); 
+             
+            };
+
          this.playerLives --;
          if (this.playerLives > 0) {
             this.player = new Player('player', this.centerStageX, this.playerStageY, this.element);
