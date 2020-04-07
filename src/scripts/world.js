@@ -181,14 +181,16 @@ class World {
             const playerShot = getElement('playershot');
             playerShot.style.top = this.playerShot.y + 'px';
 
+            if (this.playerShot.y < 0) {
+                playerShot.remove();
+                this.playerShot = undefined;
+                this.shooting = false;
+            }
+            this.colisionCheck();
+
         }
         
-        if (this.playerShot.y < 0) {
-            playerShot.remove();
-            this.playerShot = undefined;
-            this.shooting = false;
-        }
-        this.colisionCheck();
+        
     }
     
     addInvaderShot(currentAmount) {
