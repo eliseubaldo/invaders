@@ -13,7 +13,6 @@ class Player {
         this.width = this.playerSize;
         this.height = this.playerSize;
         this.initiate();
-        console.log('added Y:', this.y);
     }
 
     initiate() {

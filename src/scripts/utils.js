@@ -1,3 +1,9 @@
+import playerShot from '../sounds/playershot.wav';
+import invaderexplodes from '../sounds/explodes.wav';
+import invadershot from '../sounds/virusshot.wav';
+import playerexplodes from '../sounds/playerexplodes.wav';
+
+
 export function getElement(name) {
     return document.getElementById(name);
   }
@@ -24,7 +30,6 @@ export function shouldInvaderShot() {
 }
 
 export function getRandomInvader(invaderGrid) {
-  console.log('the grid:', invaderGrid);
   const rndRow = Math.floor(Math.random() * invaderGrid.length);
   const rndCol = Math.floor(Math.random() * invaderGrid[rndRow].length);
   return invaderGrid[rndRow][rndCol];
@@ -34,19 +39,19 @@ export function playsound(soundname) {
   let sound;
   switch (soundname) {
     case 'playershot':
-      sound = new Audio('src/sounds/playershot.wav');
+      sound = new Audio(playerShot);
       sound.play();
     break;
     case 'invadershot':
-      sound = new Audio('src/sounds/virusshot.wav');
+      sound = new Audio(invadershot);
       sound.play();
     break;
     case 'invaderexplodes':
-      sound = new Audio('src/sounds/explodes.wav');
+      sound = new Audio(invaderexplodes);
       sound.play();
     break;
     case 'playerexplodes':
-      sound = new Audio('src/sounds/playerexplodes.wav');
+      sound = new Audio(playerexplodes);
       sound.play();
     break;
 

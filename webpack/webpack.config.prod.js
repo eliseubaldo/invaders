@@ -2,6 +2,7 @@ const Webpack = require('webpack');
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const common = require('./webpack.common.js');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = merge(common, {
   mode: 'production',
@@ -19,7 +20,10 @@ module.exports = merge(common, {
     new Webpack.optimize.ModuleConcatenationPlugin(),
     new MiniCssExtractPlugin({
       filename: 'bundle.css'
-    })
+    }),
+    new CopyWebpackPlugin([
+      {from: 'src/images', to:'images'}
+    ])
   ],
   module: {
     rules: [
@@ -35,6 +39,12 @@ module.exports = merge(common, {
           'css-loader',
           'sass-loader'
         ]
+      },
+      {
+        test: /\.(png|svg|jpg|gif|wav)$/,
+        use: [
+          'file-loader',
+        ],
       }
     ]
   }

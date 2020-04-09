@@ -30,10 +30,8 @@ class MainControl {
 
     initiate(invR, invC) {
         this.world = new World(invR, invC);
-        console.log(this.world.invadersGrid);
         this.attachListeners(this);
         this.invaderMove(1000);
-        console.log('inernval:', this.interval);
     }
 
     update(progress) {
